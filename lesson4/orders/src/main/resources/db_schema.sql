@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS Customers (
+id INTEGER IDENTITY,
+customer_name VARCHAR(255),
+email VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS Orders(
+id INTEGER IDENTITY,
+order_name VARCHAR(255),
+price INTEGER,
+customer_id INTEGER NOT NULL
+);
