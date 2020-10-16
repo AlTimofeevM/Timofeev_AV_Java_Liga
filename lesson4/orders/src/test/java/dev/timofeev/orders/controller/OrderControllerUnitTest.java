@@ -38,4 +38,20 @@ public class OrderControllerUnitTest {
         Mockito.when(orderService.createOrder(order)).thenReturn(1l);
         Assertions.assertEquals("{\"id\":1}", orderController.createOrder(order));
     }
+
+    @Test
+    @DisplayName("Сохранение заказа")
+    public void createOrderWithException() throws Exception {
+        Order order = new Order();
+        order.setName("order");
+        order.setPrice(-12);
+        order.setCustomerId(1l);
+        Mockito.when(orderService.createOrder(order)).thenThrow( new NegativePriceException());
+
+        Exception exception = Assertions.assertThrows(Exception.class, () -> {
+            orderController.createOrder(order);
+        });
+
+        Assertions.assertEquals("Цена заказа меньше нуля", exception.getMessage());
+    }
 }
