@@ -35,4 +35,13 @@ public class OrderController {
         Long id = orderService.createOrder(order);
         return  "{\"id\":" + id + "}";
     }
+
+    /**
+     * Возвращает пользователю ошибку 409
+     */
+    @ExceptionHandler(NegativePriceException.class)
+    @ResponseStatus(value= HttpStatus.CONFLICT,
+            reason="У заказа отрицательная цена")
+    public void negativePriceExceptionHandler() {
+    }
 }
