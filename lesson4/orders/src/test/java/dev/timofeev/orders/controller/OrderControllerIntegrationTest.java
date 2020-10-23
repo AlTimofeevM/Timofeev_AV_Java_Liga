@@ -25,15 +25,12 @@ public class OrderControllerIntegrationTest {
     private MockMvc mvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("Сохранение заказа")
     public void createOrder() throws Exception {
-        Order order = new Order();
-        order.setName("order");
-        order.setPrice(12);
-        order.setCustomerId(1l);
+        Order order = new Order(null, "order", 12, 1l);
 
         mvc.perform(post("/api/v1/order")
                 .contentType(MediaType.APPLICATION_JSON)

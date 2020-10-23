@@ -27,29 +27,9 @@ public class OrderServiceUnitTest {
     @Test
     @DisplayName("Сохранение заказа")
     public void createOrder() throws Exception {
-        Order order = new Order();
-        order.setName("order");
-        order.setPrice(12);
-        order.setCustomerId(1l);
-
-        Mockito.when(orderDao.createOrder(order)).thenReturn(1l);
+        Order order = new Order(null, "order", 12, 1l);
+        Order result = new Order(1l, "order", 12, 1l);
+        Mockito.when(orderDao.createOrder(order)).thenReturn(result);
         Assertions.assertEquals(1l, orderService.createOrder(order));
-    }
-
-    @Test
-    @DisplayName("Сохранение заказа в БД")
-    public void createOrderWithException() throws Exception {
-        Order order = new Order();
-        order.setName("order");
-        order.setPrice(-12);
-        order.setCustomerId(1l);
-
-        Mockito.when(orderDao.createOrder(order)).thenReturn(1l);
-
-        Exception exception = Assertions.assertThrows(Exception.class, () -> {
-            orderService.createOrder(order);
-        });
-
-        Assertions.assertEquals("Цена заказа меньше нуля", exception.getMessage());
     }
 }

@@ -1,7 +1,7 @@
 package dev.timofeev.orders.dao;
 
 import dev.timofeev.orders.domain.Order;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -12,28 +12,25 @@ import java.sql.PreparedStatement;
 /**
  *  DAO для работы с заказами
  */
-@Repository
+@RequiredArgsConstructor
 public class OrderDao {
 
-    /**
-     * JDBC шаблон работы с БД
-     */
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+    private final KeyHolder keyHolder;
+
+    private final String INSERT_SQL = "INSERT INTO Orders " +
+            "(order_name," +
+            " price," +
+            " customer_id) VALUES (?,?,?)";
 
     /**
      * Занесение в БД данных о сделанном заказе
      *
      * @param order сделанный заказ
-     * @return индификатор записанного заказа
+     * @return записанный заказа
      */
-    public Long createOrder(Order order) {
-        final String INSERT_SQL = "INSERT INTO Orders " +
-                                "(order_name," +
-                                " price," +
-                                " customer_id) VALUES (?,?,?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(
+    public Order createOrder(Order order) {
+        int updatedRows = jdbcTemplate.update(
                 connection -> {
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SQL, new String[] {"id"});
                     preparedStatement.setString(1, order.getName());
@@ -43,6 +40,9 @@ public class OrderDao {
                 },
                 keyHolder
         );
-        return keyHolder.getKey().longValue();
+        if (updatedRows > 0) {
+            order.setId(keyHolder.getKey().longValue());
+        }
+        return order;
     }
 }
