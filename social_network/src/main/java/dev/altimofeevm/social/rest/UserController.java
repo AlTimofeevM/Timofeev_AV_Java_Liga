@@ -68,7 +68,6 @@ public class UserController {
      */
     @DeleteMapping("{id}")
     public ResponseEntity<UUID> delete(@PathVariable UUID id) {
-        friendService.findAll(id).stream().forEach(x -> friendService.delete(id, x.getId()));
         return ResponseEntity.ok(userService.delete(id));
     }
 

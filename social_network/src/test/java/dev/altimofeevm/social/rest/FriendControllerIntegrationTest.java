@@ -42,6 +42,7 @@ public class FriendControllerIntegrationTest {
     @BeforeEach
     public void before() {
         userDto = new UserEditDto();
+        userDto.setLogin("Login");
         userDto.setFirstName("FirstName");
         userDto.setLastName("LastName");
         userDto.setAge(12);
@@ -50,6 +51,7 @@ public class FriendControllerIntegrationTest {
         userDto.setCity("City");
 
         friendDto = new UserEditDto();
+        friendDto.setLogin("FriendLogin");
         friendDto.setFirstName("Friend");
         friendDto.setLastName("LastName");
         friendDto.setAge(21);
@@ -79,7 +81,7 @@ public class FriendControllerIntegrationTest {
                 ", \"firstName\"=" + userListDto.getFirstName() +
                 ", \"lastName\"=" + userListDto.getLastName() + "}]";
         JSONAssert.assertEquals(expectedJSON, result.getResponse().getContentAsString(), false);
-        friendService.delete(userId,friendId);
+
         userService.delete(userId);
         userService.delete(friendId);
     }
@@ -95,7 +97,6 @@ public class FriendControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("\"" + userId + "\""));
 
-        friendService.delete(userId, friendId);
         userService.delete(userId);
         userService.delete(friendId);
     }

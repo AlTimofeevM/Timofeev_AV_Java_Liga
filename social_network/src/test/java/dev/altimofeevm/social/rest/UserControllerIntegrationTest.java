@@ -41,6 +41,7 @@ public class UserControllerIntegrationTest {
     public void before() {
         userDto = new UserEditDto();
         userDto.setId(UUID.randomUUID());
+        userDto.setLogin("Login");
         userDto.setFirstName("FirstName");
         userDto.setLastName("LastName");
         userDto.setAge(12);

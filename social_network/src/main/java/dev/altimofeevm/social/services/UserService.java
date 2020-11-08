@@ -26,6 +26,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final FriendService friendService;
+
     /**
      * Получение всех пользователей
      *
@@ -46,6 +48,9 @@ public class UserService {
      */
     @Transactional
     public UUID create(UserEditDto userDto) {
+        if(userRepository.findByLogin(userDto.getLogin()) != null) {
+            throw new RuntimeException("Пользователь с таким логином уже существует");
+        }
         User user = Convert.userEditDtoToUser(userDto, new User());
         user = userRepository.save(user);
         return user.getId();
@@ -87,6 +92,8 @@ public class UserService {
      */
     @Transactional
     public UUID delete(UUID id) {
+        friendService.findAll(id).stream()
+                .forEach(x -> friendService.delete(id, x.getId()));
         Optional.ofNullable(id)
                 .ifPresent(userRepository::deleteById);
         return id;

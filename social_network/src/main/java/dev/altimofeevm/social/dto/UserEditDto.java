@@ -3,8 +3,11 @@ package dev.altimofeevm.social.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.lang.NonNull;
 
+import javax.persistence.Column;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -21,6 +24,12 @@ public class UserEditDto {
      * Индификатор пользователя
      */
     private UUID id;
+
+    /**
+     * Логин
+     */
+    @NotEmpty
+    private String login;
 
     /**
      * Имя

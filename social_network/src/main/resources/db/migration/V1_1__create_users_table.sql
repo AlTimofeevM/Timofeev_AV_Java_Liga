@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS users
 (
     id VARCHAR(36) PRIMARY KEY,
+    login VARCHAR(256) NOT NULL,
     first_name VARCHAR(128) NOT NULL,
     last_name VARCHAR(128) NOT NULL,
     age INTEGER NOT NULL,
@@ -12,6 +13,9 @@ CREATE TABLE IF NOT EXISTS users
 
 COMMENT ON TABLE users
 IS 'Пользователь';
+
+COMMENT ON COLUMN users.login
+IS 'Логин';
 
 COMMENT ON COLUMN users.first_name
 IS 'Имя';

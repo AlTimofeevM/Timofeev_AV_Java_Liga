@@ -31,6 +31,9 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private FriendService friendService;
+
     @InjectMocks
     private UserService userService;
 
@@ -44,6 +47,7 @@ public class UserServiceTest {
 
         userDto = new UserEditDto();
         userDto.setId(UUID.randomUUID());
+        userDto.setLogin("Login");
         userDto.setFirstName("FirstName");
         userDto.setLastName("LastName");
         userDto.setAge(12);
@@ -81,10 +85,14 @@ public class UserServiceTest {
     @Test
     @DisplayName("Внесение данных пользователя в БД")
     public void create() throws Exception {
+        Mockito.when(userRepository.findByLogin(Mockito.any(String.class)))
+                .thenReturn(null);
         Mockito.when(userRepository.save(Mockito.any(User.class)))
                 .thenReturn(user);
         Assertions.assertEquals(userDto.getId(), userService.create(userDto));
 
+        Mockito.verify(userRepository, Mockito.times(1))
+                .findByLogin(Mockito.any(String.class));
         Mockito.verify(userRepository, Mockito.times(1))
                 .save(Mockito.any(User.class));
         Mockito.verifyNoMoreInteractions(userRepository);
@@ -121,6 +129,8 @@ public class UserServiceTest {
     @Test
     @DisplayName("Удаление пользователя из БД")
     public void delete() throws Exception {
+        Mockito.when(friendService.findAll(userDto.getId()))
+                .thenReturn(List.of());
         Assertions.assertEquals(userDto.getId(), userService.delete(userDto.getId()));
 
         Mockito.verify(userRepository, Mockito.times(1))

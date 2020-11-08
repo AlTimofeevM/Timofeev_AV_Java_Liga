@@ -14,6 +14,7 @@ public class Convert {
     public static UserEditDto toUserEditDto(User user) {
         UserEditDto dto = new UserEditDto();
         dto.setId(user.getId());
+        dto.setLogin(user.getLogin());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setAge(user.getAge());
@@ -30,6 +31,7 @@ public class Convert {
      * @return пользователь
      */
     public static User userEditDtoToUser(UserEditDto dto, User entity) {
+        entity.setLogin(dto.getLogin());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setAge(dto.getAge());

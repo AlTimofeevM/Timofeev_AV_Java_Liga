@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -32,6 +33,13 @@ public class User {
     @Type(type = "uuid-char")
     @Column(name = "ID", nullable = false, length = 36, unique = true)
     private UUID id;
+
+    /**
+     * Логин
+     */
+    @Column(name = "LOGIN", nullable = false)
+    @NotEmpty
+    private String login;
 
     /**
      * Имя

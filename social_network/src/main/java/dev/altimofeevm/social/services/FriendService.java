@@ -33,7 +33,7 @@ public class FriendService {
     public List<UserByListDto> findAll(UUID id) {
         User user = Optional.ofNullable(id)
                 .flatMap(userRepository::findById)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         return user.getFriends().stream().map(Convert::toUserByListDto).collect(Collectors.toList());
     }
@@ -49,11 +49,11 @@ public class FriendService {
         if(id == friendId) return id;
         User user = Optional.ofNullable(id)
                 .flatMap(userRepository::findById)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         User friend = Optional.ofNullable(friendId)
                 .flatMap(userRepository::findById)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         user.getFriends().add(friend);
         friend.getFriends().add(user);
@@ -74,11 +74,11 @@ public class FriendService {
     public UUID delete(UUID id, UUID friendId) {
         User user = Optional.ofNullable(id)
                 .flatMap(userRepository::findById)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         User friend = Optional.ofNullable(friendId)
                 .flatMap(userRepository::findById)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         user.getFriends().remove(friend);
         friend.getFriends().remove(user);
