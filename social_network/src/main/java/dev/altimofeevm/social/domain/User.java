@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +38,7 @@ public class User {
      */
     @Column(name = "FIRST_NAME", nullable = false)
     @NotEmpty
+    @Length(max = 128)
     private String firstName;
 
     /**
@@ -45,6 +46,7 @@ public class User {
      */
     @Column(name = "LAST_NAME", nullable = false)
     @NotEmpty
+    @Length(max = 128)
     private String lastName;
 
     /**
@@ -73,6 +75,7 @@ public class User {
      */
     @Column(name = "CITY", nullable = false)
     @NotEmpty
+    @Length(max = 40)
     private String city;
 
     /**
