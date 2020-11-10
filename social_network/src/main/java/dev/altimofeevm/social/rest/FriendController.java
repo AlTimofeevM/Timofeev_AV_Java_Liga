@@ -37,9 +37,9 @@ public class FriendController {
      * @param friendId идентификатор друга
      * @return response объект с соответствующим статусом состояния
      */
-    @PostMapping("{friendId}")
+    @PostMapping
     public ResponseEntity<UUID> create(@PathVariable UUID id,
-                                       @PathVariable UUID friendId) {
+                                       @RequestBody UUID friendId) {
         return ResponseEntity.ok(friendService.create(id, friendId));
     }
 
@@ -50,9 +50,9 @@ public class FriendController {
      * @param friendId идентификатор друга
      * @return response объект с соответствующим статусом состояния
      */
-    @DeleteMapping("{friendId}")
+    @DeleteMapping()
     public ResponseEntity<UUID> delete(@PathVariable UUID id,
-                                       @PathVariable UUID friendId) {
+                                       @RequestBody UUID friendId) {
         return ResponseEntity.ok(friendService.delete(id, friendId));
     }
 

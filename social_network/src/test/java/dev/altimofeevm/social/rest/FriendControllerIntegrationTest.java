@@ -92,8 +92,9 @@ public class FriendControllerIntegrationTest {
         UUID userId = userService.create(userDto);
         UUID friendId = userService.create(friendDto);
 
-        mvc.perform(post("/users/"+ userId + "/friends/" + friendId)
-                .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(post("/users/"+ userId + "/friends")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("\"" + friendId + "\""))
                 .andExpect(status().isOk())
                 .andExpect(content().string("\"" + userId + "\""));
 
@@ -108,8 +109,9 @@ public class FriendControllerIntegrationTest {
         UUID friendId = userService.create(friendDto);
         friendService.create(userId, friendId);
 
-        mvc.perform(MockMvcRequestBuilders.delete("/users/"+ userId + "/friends/" + friendId)
-                .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.delete("/users/"+ userId + "/friends")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("\"" + friendId + "\""))
                 .andExpect(status().isOk())
                 .andExpect(content().string("\"" + userId + "\""));
 
