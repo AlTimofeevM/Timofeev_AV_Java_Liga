@@ -3,9 +3,11 @@ package dev.altimofeevm.social.services;
 import dev.altimofeevm.social.domain.User;
 import dev.altimofeevm.social.dto.UserByListDto;
 import dev.altimofeevm.social.dto.UserEditDto;
+import dev.altimofeevm.social.dto.UserRegistrationDto;
 import dev.altimofeevm.social.repositories.UserRepository;
 import dev.altimofeevm.social.services.filter.UserFilter;
 import dev.altimofeevm.social.utils.Convert;
+import dev.altimofeevm.social.utils.Gender;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,12 +40,20 @@ public class UserServiceTest {
     private UserService userService;
 
     private UserEditDto userDto;
+    private UserRegistrationDto userRegDto;
+
 
     private User user;
 
     @BeforeEach
     public void before() {
         MockitoAnnotations.initMocks(this);
+        userRegDto = new UserRegistrationDto();
+        userRegDto.setLogin("Login");
+        userRegDto.setFirstName("FirstName");
+        userRegDto.setLastName("LastName");
+        userRegDto.setAge(12);
+        userRegDto.setGender(Gender.M);
 
         userDto = new UserEditDto();
         userDto.setId(UUID.randomUUID());
@@ -51,7 +61,7 @@ public class UserServiceTest {
         userDto.setFirstName("FirstName");
         userDto.setLastName("LastName");
         userDto.setAge(12);
-        userDto.setGender('M');
+        userDto.setGender(Gender.M);
         userDto.setInterests("No");
         userDto.setCity("City");
 
@@ -89,7 +99,7 @@ public class UserServiceTest {
                 .thenReturn(null);
         Mockito.when(userRepository.save(Mockito.any(User.class)))
                 .thenReturn(user);
-        Assertions.assertEquals(userDto.getId(), userService.create(userDto));
+        Assertions.assertEquals(userDto.getId(), userService.create(userRegDto));
 
         Mockito.verify(userRepository, Mockito.times(1))
                 .findByLogin(Mockito.any(String.class));

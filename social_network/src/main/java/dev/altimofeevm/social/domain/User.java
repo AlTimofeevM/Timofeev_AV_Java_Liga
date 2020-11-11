@@ -1,12 +1,12 @@
 package dev.altimofeevm.social.domain;
 
+import dev.altimofeevm.social.utils.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -69,7 +69,8 @@ public class User {
      */
     @Column(name = "GENDER", nullable = false)
     @NonNull
-    private Character gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     /**
      * Интересы

@@ -3,7 +3,9 @@ package dev.altimofeevm.social.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.altimofeevm.social.dto.UserByListDto;
 import dev.altimofeevm.social.dto.UserEditDto;
+import dev.altimofeevm.social.dto.UserRegistrationDto;
 import dev.altimofeevm.social.services.UserService;
+import dev.altimofeevm.social.utils.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,15 +39,24 @@ public class UserControllerIntegrationTest {
 
     private UserEditDto userDto;
 
+    private UserRegistrationDto userRegDto;
+
     @BeforeEach
     public void before() {
+        userRegDto = new UserRegistrationDto();
+        userRegDto.setLogin("Login");
+        userRegDto.setFirstName("FirstName");
+        userRegDto.setLastName("LastName");
+        userRegDto.setAge(12);
+        userRegDto.setGender(Gender.M);
+
         userDto = new UserEditDto();
         userDto.setId(UUID.randomUUID());
         userDto.setLogin("Login");
         userDto.setFirstName("FirstName");
         userDto.setLastName("LastName");
         userDto.setAge(12);
-        userDto.setGender('M');
+        userDto.setGender(Gender.M);
         userDto.setInterests("No");
         userDto.setCity("City");
     }
@@ -66,7 +77,7 @@ public class UserControllerIntegrationTest {
     @Test
     @DisplayName("Получение пользователя по идентификатору")
     public void findOne() throws Exception {
-        UUID id = userService.create(userDto);
+        UUID id = userService.create(userRegDto);
         mvc.perform(get("/users/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -76,15 +87,15 @@ public class UserControllerIntegrationTest {
                 .andExpect(jsonPath("$.lastName").value(userDto.getLastName()))
                 .andExpect(jsonPath("$.age").value(userDto.getAge()))
                 .andExpect(jsonPath("$.gender").value(userDto.getGender().toString()))
-                .andExpect(jsonPath("$.interests").value(userDto.getInterests()))
-                .andExpect(jsonPath("$.city").value(userDto.getCity()));
+                .andExpect(jsonPath("$.interests").value("Не указаны"))
+                .andExpect(jsonPath("$.city").value("Не указан"));
         userService.delete(id);
     }
 
     @Test
     @DisplayName("Обновление данных пользователя")
     public void update() throws Exception {
-        UUID id = userService.create(userDto);
+        UUID id = userService.create(userRegDto);
         userDto.setFirstName("NewName");
         mvc.perform(put("/users/" + id)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -96,7 +107,7 @@ public class UserControllerIntegrationTest {
     @Test
     @DisplayName("Удаление пользователя")
     public void delete() throws Exception {
-        UUID id = userService.create(userDto);
+        UUID id = userService.create(userRegDto);
         mvc.perform(MockMvcRequestBuilders.delete("/users/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -105,7 +116,7 @@ public class UserControllerIntegrationTest {
     @Test
     @DisplayName("Получение всех пользователей")
     public void findAll() throws Exception {
-        UUID id = userService.create(userDto);
+        UUID id = userService.create(userRegDto);
         UserByListDto userListDto = new UserByListDto();
         userListDto.setId(userDto.getId());
         userListDto.setFirstName(userDto.getFirstName());

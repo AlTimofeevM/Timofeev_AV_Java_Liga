@@ -2,6 +2,7 @@ package dev.altimofeevm.social.rest;
 
 import dev.altimofeevm.social.dto.UserByListDto;
 import dev.altimofeevm.social.dto.UserEditDto;
+import dev.altimofeevm.social.dto.UserRegistrationDto;
 import dev.altimofeevm.social.services.FriendService;
 import dev.altimofeevm.social.services.UserService;
 import dev.altimofeevm.social.services.filter.UserFilter;
@@ -43,14 +44,14 @@ public class UserControllerTest {
     @Test
     @DisplayName("Создание пользователя")
     public void create() throws Exception {
-        UserEditDto userDto = new UserEditDto();
+        UserRegistrationDto userDto = new UserRegistrationDto();
         UUID userId = UUID.randomUUID();
 
         Mockito.when(userService.create(userDto)).thenReturn(userId);
         Assertions.assertEquals(ResponseEntity.ok(userId), userController.create(userDto));
 
         Mockito.verify(userService, Mockito.times(1))
-                .create(Mockito.any(UserEditDto.class));
+                .create(Mockito.any(UserRegistrationDto.class));
         Mockito.verifyNoMoreInteractions(userService);
     }
 

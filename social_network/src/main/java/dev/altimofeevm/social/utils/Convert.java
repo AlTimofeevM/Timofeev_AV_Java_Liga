@@ -3,6 +3,7 @@ package dev.altimofeevm.social.utils;
 import dev.altimofeevm.social.domain.User;
 import dev.altimofeevm.social.dto.UserByListDto;
 import dev.altimofeevm.social.dto.UserEditDto;
+import dev.altimofeevm.social.dto.UserRegistrationDto;
 
 public class Convert {
     /**
@@ -38,6 +39,17 @@ public class Convert {
         entity.setGender(dto.getGender());
         entity.setInterests(dto.getInterests());
         entity.setCity(dto.getCity());
+        return entity;
+    }
+
+    public static User userRegistrationDtoToUser(UserRegistrationDto dto, User entity) {
+        entity.setLogin(dto.getLogin());
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setAge(dto.getAge());
+        entity.setGender(dto.getGender());
+        entity.setInterests("Не указаны");
+        entity.setCity("Не указан");
         return entity;
     }
 

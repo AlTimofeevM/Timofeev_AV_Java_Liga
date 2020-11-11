@@ -4,7 +4,6 @@ import dev.altimofeevm.social.utils.Gender;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.cglib.core.GeneratorStrategy;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.EnumType;
@@ -12,19 +11,10 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import java.util.UUID;
 
-/**
- * DTO данных пользователя
- */
 @Data
 @NoArgsConstructor
-public class UserEditDto {
-
-    /**
-     * Индификатор пользователя
-     */
-    private UUID id;
+public class UserRegistrationDto {
 
     /**
      * Логин
@@ -47,14 +37,6 @@ public class UserEditDto {
     private String lastName;
 
     /**
-     * Возраст
-     */
-    @NonNull
-    @Min(0)
-    @Max(200)
-    private Integer age;
-
-    /**
      * Пол
      */
     @NonNull
@@ -62,15 +44,10 @@ public class UserEditDto {
     private Gender gender;
 
     /**
-     * Интересы
+     * Возраст
      */
     @NonNull
-    private String interests;
-
-    /**
-     * Город
-     */
-    @NotEmpty
-    @Length(max = 40)
-    private String city;
+    @Min(0)
+    @Max(200)
+    private Integer age;
 }

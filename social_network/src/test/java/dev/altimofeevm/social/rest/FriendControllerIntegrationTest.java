@@ -7,8 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import dev.altimofeevm.social.dto.UserByListDto;
 import dev.altimofeevm.social.dto.UserEditDto;
+import dev.altimofeevm.social.dto.UserRegistrationDto;
 import dev.altimofeevm.social.services.FriendService;
 import dev.altimofeevm.social.services.UserService;
+import dev.altimofeevm.social.utils.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,28 +38,24 @@ public class FriendControllerIntegrationTest {
     @Autowired
     private FriendService friendService;
 
-    private UserEditDto userDto;
-    private UserEditDto friendDto;
+    private UserRegistrationDto userDto;
+    private UserRegistrationDto friendDto;
 
     @BeforeEach
     public void before() {
-        userDto = new UserEditDto();
+        userDto = new UserRegistrationDto();
         userDto.setLogin("Login");
         userDto.setFirstName("FirstName");
         userDto.setLastName("LastName");
         userDto.setAge(12);
-        userDto.setGender('M');
-        userDto.setInterests("No");
-        userDto.setCity("City");
+        userDto.setGender(Gender.M);;
 
-        friendDto = new UserEditDto();
+        friendDto = new UserRegistrationDto();
         friendDto.setLogin("FriendLogin");
         friendDto.setFirstName("Friend");
         friendDto.setLastName("LastName");
         friendDto.setAge(21);
-        friendDto.setGender('W');
-        friendDto.setInterests("Yes");
-        friendDto.setCity("City");
+        friendDto.setGender(Gender.W);
     }
 
     @Test

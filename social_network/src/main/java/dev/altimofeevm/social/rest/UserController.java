@@ -2,6 +2,7 @@ package dev.altimofeevm.social.rest;
 
 import dev.altimofeevm.social.dto.UserByListDto;
 import dev.altimofeevm.social.dto.UserEditDto;
+import dev.altimofeevm.social.dto.UserRegistrationDto;
 import dev.altimofeevm.social.services.FriendService;
 import dev.altimofeevm.social.services.UserService;
 import dev.altimofeevm.social.services.filter.UserFilter;
@@ -33,7 +34,7 @@ public class UserController {
      * @return response объект с соответствующим статусом состояния
      */
     @PostMapping
-    public ResponseEntity<UUID> create(@RequestBody @Valid UserEditDto userDto) {
+    public ResponseEntity<UUID> create(@RequestBody @Valid UserRegistrationDto userDto) {
         return ResponseEntity.ok(userService.create(userDto));
     }
 

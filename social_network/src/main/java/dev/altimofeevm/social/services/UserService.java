@@ -3,6 +3,7 @@ package dev.altimofeevm.social.services;
 import dev.altimofeevm.social.domain.User;
 import dev.altimofeevm.social.dto.UserByListDto;
 import dev.altimofeevm.social.dto.UserEditDto;
+import dev.altimofeevm.social.dto.UserRegistrationDto;
 import dev.altimofeevm.social.repositories.UserRepository;
 import dev.altimofeevm.social.services.filter.UserFilter;
 import dev.altimofeevm.social.utils.Convert;
@@ -47,11 +48,11 @@ public class UserService {
      * @param userDto данные пользователя
      */
     @Transactional
-    public UUID create(UserEditDto userDto) {
+    public UUID create(UserRegistrationDto userDto) {
         if(userRepository.findByLogin(userDto.getLogin()) != null) {
             throw new RuntimeException("Пользователь с таким логином уже существует");
         }
-        User user = Convert.userEditDtoToUser(userDto, new User());
+        User user = Convert.userRegistrationDtoToUser(userDto, new User());
         user = userRepository.save(user);
         return user.getId();
     }

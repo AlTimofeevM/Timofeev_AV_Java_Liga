@@ -46,7 +46,9 @@ public class FriendService {
      */
     @Transactional
     public UUID create(UUID id, UUID friendId) {
-        if(id == friendId) return id;
+        if(id.equals(friendId)) {
+            throw new RuntimeException("Нельзя добавить в друзья самого себя");
+        }
         User user = Optional.ofNullable(id)
                 .flatMap(userRepository::findById)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
@@ -55,6 +57,9 @@ public class FriendService {
                 .flatMap(userRepository::findById)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
+        if(user.getFriends().contains(friend)) {
+            throw new RuntimeException("Данный пользователь уже является другом");
+        }
         user.getFriends().add(friend);
         friend.getFriends().add(user);
 

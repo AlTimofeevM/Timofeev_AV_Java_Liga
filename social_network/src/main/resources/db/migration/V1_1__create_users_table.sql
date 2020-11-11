@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users
     first_name VARCHAR(128) NOT NULL,
     last_name VARCHAR(128) NOT NULL,
     age INTEGER NOT NULL,
-    gender CHAR NOT NUll,
+    gender VARCHAR(1) NOT NUll,
     interests VARCHAR(1024) NOT NULL,
     city VARCHAR(40) NOT NULL
 );
